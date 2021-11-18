@@ -1,7 +1,7 @@
 
 const inquirer = require('inquirer');
 const { viewDepartments, viewRoles, viewEmployees } = require('./lib/ShowDB');
-const { addDepartment, addRole, addEmployee, updateEmployee } = require('./lib/ChangeDB');
+const { addDepartment, addRole, roleList, managerList, addEmployee, updateEmployee } = require('./lib/ChangeDB');
 
 
 
@@ -33,16 +33,13 @@ const init = () => {
     .then((choice)=>{
         switch(choice.mainQuestion){
             case 'View All Departments':
-                viewDepartments();
-                init();
+                viewDepartments().then(init());
                 break;
             case 'View All Roles':
-                viewRoles();
-                init();
+                viewRoles().then(init());
                 break;
             case 'View All Employees':
-                viewEmployees();
-                init();
+                viewEmployees().then(init());
                 break;
             case 'Add Department':
                 inquirer
@@ -55,108 +52,94 @@ const init = () => {
                 ])
                 .then((data)=>{
                     console.log(`Added ${data.addDepartment} to the database.`);
-                    addDepartment(data.addDepartment);
-                    init();
+                    addDepartment(data.addDepartment).then(init());
                 })
                 break;
-            // case 'Add Role':
-            //     inquirer
-            //     .prompt([
-            //         {
-            //             type:'',
-            //             name:'',
-            //             message:''
-            //         }
-            //     ])
-            //     addRole();
-            //     init();
-            //     break;
-            // case 'Add Employee':
-            //     addEmployee();
-            //     break;
-            // case 'Update Employee Role':
-            //     updateEmployee();
-            //     break;
+            case 'Add Role':
+                inquirer
+                .prompt([
+                    {
+                        type:'input',
+                        name:'addRole',
+                        message:'What is the name of the role?'
+                    },
+                    {
+                        type:'input',
+                        name:'addSalary',
+                        message:'What is the salary of the role?'
+                    },
+                    {
+                        type:'input',
+                        name:'addDepartment',
+                        message:'Which department does the role belong to?'
+                    }
+                ])
+                .then((data) =>{
+                    addRole(data.addRole, data.addSalary, data.addDepartment)
+                    .then(console.log(`Add ${data.addRole} to the database.`))
+                    .then(init());   
+                })
+                break;
+            case 'Add Employee':
+                inquirer
+                .prompt([
+                    {
+                        type:'input',
+                        name:'firstName',
+                        message:'What is the employee\'s first name?'
+                    },
+                    {
+                        type:'input',
+                        name:'lastName',
+                        message:'What is the employee\'s last name?'
+                    },
+                    {
+                        type:'list',
+                        name:'role',
+                        message:'What is the employee\'s role?',
+                        choices: roleList()
+                    },
+                    {
+                        type:'list',
+                        name:'managerName',
+                        message:'Who is the employee\'s manager?',
+                        choices: managerList()
+                    }
+                ])
+                .then((data)=>{
+                    const {firstName, lastName, role, managerName} = data;
+                    addEmployee(firstName, lastName, role, managerName)
+                    .then(console.log(`Add ${firstName} ${lastName} to the database.`))
+                    .then(init());   
+                })
+                break;
+            case 'Update Employee Role':
+                inquirer
+                .prompt([
+                    {
+                        type:'input',
+                        name:'employeeName',
+                        message:'Which employee\'s role do you want to update?'
+                    },
+                    {
+                        type:'list',
+                        name:'newRole',
+                        message:'Which role do you want to assign the selected employee?',
+                        choices: roleList()
+                    }
+                ])
+                .then((data) =>{
+                    const {employeeName, newRole} = data;
+                    updateEmployee(employeeName, newRole)
+                    .then(console.log(`Update the role of ${employeeName} to the database.`))
+                    .then(init());  
+                })
+                break;
             case 'Done':
+                console.log('Thanks for using employee-tracker, have a nice day!')
                 break;
         }
-        // // If the user choose 'View All Departments'
-        // if(choice.mainQuestion == 'View All Departments'){
-        //     viewDepartments();
-        //     init();
-        // // If the user choose 'View All Roles'   
-        // }else if(choice.mainQuestion == 'View All Roles'){
-        //     viewRoles();
-        //     init();
-        // // If the user choose 'View All Employees'   
-        // }else if(choice.mainQuestion == 'View All Employees'){
-        //     viewEmployees();
-        //     init();
-        // // If the user choose 'Add Department'   
-        // }else if(choice.mainQuestion == 'Add Department'){   
-        //     inquirer
-        //     .prompt([
-        //         {
-        //             type:'input',
-        //             name: 'addNewDepartment',
-        //             message: 'What is the name of the department?'
-        //         }
-        //     ]) 
-        //     .then((data)=>{
-        //         addDepartment(data);
-        //         console.log(`Added ${data} to the database`);
-        //         init();
-        //     }) 
-        // // If the user choose 'Add Role' 
-        // }else if(choice.mainQuestion == 'Add Role'){
-        //     inquirer
-        //     .prompt([
-        //         {
-        //             type:'input',
-        //             name: 'addNewRole',
-        //             message: 'What is the name of the role?'
-        //         },
-        //         {
-        //             type:'input',
-        //             name: 'addNewRoleSalary',
-        //             message: 'What is the the salary of the role?'
-        //         },
-        //         {
-        //             type:'input',
-        //             name: 'addNewRoleDepartment',
-        //             message: 'Which department does the role belong to?'
-        //         }
-        //     ]) 
-        //     .then((data)=>{
-        //         const {addNewRole, addNewRoleSalary, addNewRoleDepartment} = data;
-        //         addRole(addNewRole, addNewRoleSalary, addNewRoleDepartment);
-        //         console.log(`Added ${addNewRole} to the database`);
-        //         init();
-        //     })  
-        // // If the user choose 'Add Employee'       
-        // // }else if(answer.mainQuetion == 'Add Employee'){   
-        // //     inquirer
-        // //     .prompt([
-        // //         {
-        // //             type:'input',
-        // //             name: 'addNewEmployee',
-        // //             message: 'What is the employee\'s first name?'
-        // //         }
-        // //     ]) 
-        // //     .then((data)=>{
-        // //         addEmployee(data);
-        // //         console.log(`Added ${data} to the database`);
-        // //         init();
-        // //     })  
-        // // // If the user choose 'Update Employee Role' 
-        // // }else if(answer.mainQuetion == 'Update Employee Role'){
-        // //     updateEmployee();
-        // //     init();
-        // // If the user choose 'Done' 
-        // }else if (choice.mainQuestion == 'Done'){
-        //     console.log("Thank you for using Employee-Tracker, you have a nice day!")
-        // }
-
+        
     })
     
     // .catch((err)=>{
@@ -166,4 +149,4 @@ const init = () => {
 
 init();
 
-// module.exports = ;
+// module.exports = {init};
