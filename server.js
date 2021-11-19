@@ -3,15 +3,18 @@ const inquirer = require('inquirer');
 const { viewDepartments, viewRoles, viewEmployees } = require('./lib/ShowDB');
 const { addDepartment, addRole, roleList, managerList, addEmployee, updateEmployee } = require('./lib/ChangeDB');
 
-
+const start = () => {
+    console.log(`
+    +--------------------------------+
+    |           Employee             |
+    |           Tracker              |
+    +--------------------------------+
+    `);
+    init();
+}
 
 const init = () => {
-    // console.log(`
-    // +--------------------------------+
-    // |           Employee             |
-    // |           Tracker              |
-    // +--------------------------------+
-    // `);
+    
     inquirer
     .prompt([
         {
@@ -141,12 +144,6 @@ const init = () => {
         }
         
     })
-    
-    // .catch((err)=>{
-    //     console.log(err)
-    // })
 }
 
-init();
-
-// module.exports = {init};
+start();
