@@ -21,7 +21,8 @@
   * You can now access the Employee-Tracker Application
 
   ## Usage
-  ![Screenshot](./src/ScreenShot.png)
+  <img width="1504" alt="截屏2021-11-19 上午12 04 33" src="https://user-images.githubusercontent.com/68092036/142568305-a814de75-a7b8-4cdf-890c-ba29a9cd2a5b.png">
+
 
   Walkthrough Video Link: https://drive.google.com/drive/folders/1DUZONLmh4x20tIGIlH5m-907Xu7iCV2A
   
