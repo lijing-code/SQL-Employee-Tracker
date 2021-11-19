@@ -1,51 +1,47 @@
 # SQL-Employee-Tracker
-// SCHEMA.SQL
-  // 3 tables
-  // every table has a primary key ID
-  // DEPARTMENT and ROLE
-    // Department has many roles
-    // ROLE has a foreign key referencing Department
-  // ROLE and EMPLOYEE
-    // An employee has a single role, many employees can be the same role
-    // EMPLOYEE has a foreign key referencing ROLE
-  // EMPLOYEE
-    // manager_id FOREIGN KEY referencing the same table.
-    // join Employee on itself to get manager
+![MIT](https://img.shields.io/static/v1?label=license&message=MIT&color=brightgreen&style=plastic&logo=appveyor)
+  ---
+  ## Description
+  This is a project about build a command-line application from scratch to manage a company's employee databasem using Node.js, Inquirer, and MySQL. Developers frequently have to create interfaces that allow non-developers to easily view and interact with information stored in databases. These interfaces are called content management systems (CMS).The application of Employee-Tracker will let the user (like a business owner) be able to view and manage the departments, roles, and employees in his/her compnay, so that the user can organize and plan their own business employee system.
+  ---
+  ## Table of Contents 
+  - Link of the repo: https://github.com/lijing-code/SQL-Employee-Tracker
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [License](#license)
+  - [Tests](#tests)
+  - [Questions](#questions)
+  ---
+  ## Installation
+  * Login your Github
+  * Find the right project
+  * Install npm packages
+  * Run Mysql (schema.sql, seeds.sql)
+  * Run Node.js
+  * You can now access the Employee-Tracker Application
 
-// SEEDS.SQL
-  // fill each table with data
+  ## Usage
+  ![Screenshot](./src/ScreenShot.png)
 
-// Queries
-  // WHEN I choose to view all departments
-    // SELECT *
-  // WHEN I choose to view all roles
-    // SELECT * FROM role JOIN department
-  // WHEN I choose to view all employees (hard)
-    // SELECT attributes FROM employee JOIN role JOIN department LEFT JOIN Employee
-      // rename EMPLOYEE e1 and EMPLOYEE e2
-      // select attributes e1.first_name, e1.last_name
-      // get manager name from e2
-  // WHEN I choose to add a department
-    // INSERT
-  // WHEN I choose to add a role (slightly hard)
-    // SELECT all the departments
-      // whichever dept you select from list, grab the ID
-      // INSERT INTO ROLE title, salary, dept_id
-  // WHEN I choose to add an employee
-    // SELECT all the roles
-      // get role_id
-    // SELECT all the employees
-      // get id of employee you want to be manager
-    // INSERT INTO employee first, last, role_id, manager_id
-  // WHEN I choose to update an employee role
-    // SELECT all the employees
-      // pick which id you're going to update
-    // SELECT all roles
-      // pick which role_id you're going to update
-    // UPDATE query
+  Walkthrough Video Link: https://drive.google.com/drive/folders/1DUZONLmh4x20tIGIlH5m-907Xu7iCV2A
+  
+  ---
+  ## License
+  This project is using MIT license:
+  ![MIT](https://img.shields.io/static/v1?label=license&message=MIT&color=brightgreen&style=plastic&logo=appveyor)
 
-    
-    +--------------------------------+
-    |           Employee             |
-    |           Tracker              |
-    +--------------------------------+
+  ## How to Contribute
+  [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+  * 
+
+  ## Tests
+  * make sure you have node.js and MySQL in your local computer
+  * download the project folder
+  * install npm, run MySQL, run node.js
+  * answer the questions in the terminal
+  * you can now generate the employee-tracker tables based on your choices  
+
+  ## Questions
+  - My GitHub is https://github.com/lijing-code, please feel free to ask me if you have any question about my project.
+  - My email is lijing900913@gmail.com.
+
