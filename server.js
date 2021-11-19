@@ -134,7 +134,6 @@ const init = () => {
                 .then((data) =>{
                     const {employeeName, newRole} = data;
                     updateEmployee(employeeName, newRole)
-                    .then(console.log(`Update the role of ${employeeName} to the database.`))
                     .then(init());  
                 })
                 break;
